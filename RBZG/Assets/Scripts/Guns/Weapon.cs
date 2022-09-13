@@ -182,9 +182,19 @@ namespace RBZG
                 RaycastHit t_hit = new RaycastHit();
                 if (Physics.Raycast(t_spawn.position, t_bloom, out t_hit, 1000f, canBeShot))
                 {
-                    GameObject t_newHole = Instantiate(bulletholePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity) as GameObject;
-                    t_newHole.transform.LookAt(t_hit.point + t_hit.normal);
-                    Destroy(t_newHole, 5f);
+                    if (t_hit.transform.gameObject.tag == "Enemy")
+                    {
+                        GameObject enemy = t_hit.transform.gameObject;
+                        EnemyAI enemyAI = enemy.transform.parent.parent.GetComponent<EnemyAI>();
+
+                        enemyAI.TakeDamage(loadout[currentIndex].damage);
+                    }
+                    else
+                    {
+                        GameObject t_newHole = Instantiate(bulletholePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity) as GameObject;
+                        t_newHole.transform.LookAt(t_hit.point + t_hit.normal);
+                        Destroy(t_newHole, 5f);
+                    }
                 }
             }
 

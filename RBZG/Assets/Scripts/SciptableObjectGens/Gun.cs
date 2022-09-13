@@ -22,8 +22,8 @@ namespace RBZG
         public GameObject prefab;
         public bool recovery;
 
-        private int stash; //current ammo
-        private int clip; //current clip
+        public int stash; //current ammo
+        public int clip; //current clip
 
         public void Initialize()
         {

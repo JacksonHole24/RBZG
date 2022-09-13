@@ -22,6 +22,8 @@ namespace RBZG
         public bool isAiming;
         private Weapon weaponScript;
 
+        public int health;
+
         public float speed;
         public float sprintModifier;
         public float crouchModifier;
@@ -60,6 +62,9 @@ namespace RBZG
         private float t_vmove;
         private float t_hmove;
         private Vector3 t_direction;
+
+        public Transform deathCamPos;
+        public float deathCamTransitionTime;
 
 
         private void Start()
@@ -271,6 +276,16 @@ namespace RBZG
             else
             {
                 UI_crosshair.SetActive(true);
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            health -= damage;
+
+            if (health <= 0)
+            {
+                GetComponent<MouseLook>().enabled = false;
             }
         }
     }
