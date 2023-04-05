@@ -16,11 +16,16 @@ MonoBehaviour:
   damage: 10
   reloadTime: 2
   ammo: 40
-  burst: 0
+  fireMode: 0
+  pellets: 0
   clipSize: 8
   firerate: 0.2
   bloom: 15
   recoil: 10
   kickback: 0.2
   aimSpeed: 12
-  prefab: {fileID: 4416933527184050174, guid: a6a0ed8b70a95fd4a9d3f5a5db0e8815, type: 3}
+  prefab: {fileID: 506274403659205379, guid: f5c336d1e6dbe47449bcadcbdba2185b, type: 3}
+  bulletholePrefab: {fileID: 1349480501025656404, guid: 2c8b1b3219ea4a249be6f0a353f69fc7, type: 3}
+  recovery: 0
+  stash: 40
+  clip: 0

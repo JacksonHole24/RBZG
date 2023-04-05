@@ -9,7 +9,6 @@ namespace RBZG
     {
         public List<Gun> loadout;
         public Transform weaponParent;
-        public GameObject bulletholePrefab;
         public LayerMask canBeShot;
 
         private float currentCooldown;
@@ -191,7 +190,7 @@ namespace RBZG
                     }
                     else
                     {
-                        GameObject t_newHole = Instantiate(bulletholePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity) as GameObject;
+                        GameObject t_newHole = Instantiate(loadout[currentIndex].bulletholePrefab, t_hit.point + t_hit.normal * 0.001f, Quaternion.identity) as GameObject;
                         t_newHole.transform.LookAt(t_hit.point + t_hit.normal);
                         Destroy(t_newHole, 5f);
                     }

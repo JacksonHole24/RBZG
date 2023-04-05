@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.3070714, y: 2.801858, z: -0.013638331}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 540682491495629214}
   m_RootOrder: 1
@@ -59,6 +60,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.8, z: 1.2}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4795156901321150386}
   m_RootOrder: 0
@@ -82,6 +84,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -152,6 +155,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1805968113152502885}
   m_Father: {fileID: 540682491495629214}
@@ -167,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 540682491495629214}
   - component: {fileID: 9003735231512249847}
-  - component: {fileID: 3764635989798740223}
+  - component: {fileID: 2182926663347930082}
   m_Layer: 9
   m_Name: Zombie
   m_TagString: Untagged
@@ -185,6 +189,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.68, y: 3.49, z: -12.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4795156901321150386}
   - {fileID: 7215156022675959893}
@@ -213,7 +218,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3764635989798740223
+--- !u!114 &2182926663347930082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,13 +227,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6521097245498084924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 183c29bd77e669840855ad4ee9dbc20c, type: 3}
+  m_Script: {fileID: 11500000, guid: 22a8fd1ec1c9847468ede6fb13421006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whatIsPlayer:
+  obstacleMask:
     serializedVersion: 2
-    m_Bits: 64
-  health: 100
-  damage: 25
-  timeBetweenAttacks: 2
-  attackRange: 2
+    m_Bits: 1024
+  player: {fileID: 0}
+  chasePlayerRadius: 5
+  minReactionTime: 0.1
+  maxReactionTime: 0.5
+  minMoveSpeed: 3
+  maxMoveSpeed: 4

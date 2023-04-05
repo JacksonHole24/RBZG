@@ -7,7 +7,7 @@ namespace RBZG
 {
     public class Player : MonoBehaviour
     {
-        public Transform weaponParent;
+        [SerializeField] Transform weaponParent;
 
         private Vector3 weaponParentOrigin;
         private Vector3 targetWeaponBobPosition;
@@ -19,21 +19,21 @@ namespace RBZG
         private float movementCounter;
         private float idleCounter;
 
-        public bool isAiming;
+        [HideInInspector] public bool isAiming;
         private Weapon weaponScript;
 
-        public int health;
+        [SerializeField] int health;
 
-        public float speed;
-        public float sprintModifier;
-        public float crouchModifier;
-        public float lengthOfSlide;
-        public float slideModidier;
-        public Camera normalCam;
+        [SerializeField] float speed;
+        [SerializeField] float sprintModifier;
+        [SerializeField] float crouchModifier;
+        [SerializeField] float lengthOfSlide;
+        [SerializeField] float slideModidier;
+        [SerializeField] Camera normalCam;
 
-        public Transform groundCheck;
-        public float groundDistance;
-        public LayerMask groundMask;
+        [SerializeField] Transform groundCheck;
+        [SerializeField] float groundDistance;
+        [SerializeField] LayerMask groundMask;
 
         private CharacterController controller;
 
@@ -45,15 +45,15 @@ namespace RBZG
         private bool isSprinting;
         private bool crouched;
 
-        public float jumpHeight;
+        [SerializeField] float jumpHeight;
 
-        public float gravity;
+        [SerializeField] float gravity;
         Vector3 velocity;
 
-        public float slideAmount;
-        public float crouchAmount;
-        public GameObject standingCollider;
-        public GameObject crouchingCollider;
+        [SerializeField] float slideAmount;
+        [SerializeField] float crouchAmount;
+        [SerializeField] GameObject standingCollider;
+        [SerializeField] GameObject crouchingCollider;
 
         private bool sliding;
         private float slide_time;
@@ -63,8 +63,8 @@ namespace RBZG
         private float t_hmove;
         private Vector3 t_direction;
 
-        public Transform deathCamPos;
-        public float deathCamTransitionTime;
+        [SerializeField] Transform deathCamPos;
+        [SerializeField] float deathCamTransitionTime;
 
 
         private void Start()
@@ -285,8 +285,14 @@ namespace RBZG
 
             if (health <= 0)
             {
-                GetComponent<MouseLook>().enabled = false;
+                Death();
             }
+        }
+
+        private void Death()
+        {
+            GetComponent<MouseLook>().enabled = false;
+            GetComponent<Player>().enabled = false;
         }
     }
 }

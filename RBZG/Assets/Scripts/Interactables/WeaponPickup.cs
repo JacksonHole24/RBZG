@@ -14,6 +14,8 @@ namespace RBZG
 
         private bool isDisabled;
         private float wait;
+        private bool isColliding;
+        private GameObject player;
 
         private void Start()
         {
@@ -25,6 +27,16 @@ namespace RBZG
 
         private void Update()
         {
+            if (isColliding)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    Weapon weaponController = player.GetComponent<Weapon>();
+                    weaponController.PickupWeapon(weapon.name);
+                    Disable();
+                }
+            }
+
             if (isDisabled)
             {
                 if (wait >= 0)
@@ -38,33 +50,21 @@ namespace RBZG
             }
         }
 
-        private void OnTriggerStay(Collider other)
-        {
-            if(other.gameObject.tag == "Player")
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    Weapon weaponController = other.gameObject.GetComponent<Weapon>();
-                    weaponController.PickupWeapon(weapon.name);
-                    Disable();
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "Player")
             {
                 pickupText.SetActive(true);
+                isColliding = true;
+                player = other.gameObject;
             }
         }
+
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player")
             {
+                isColliding = false;
                 pickupText.SetActive(false);
             }
         }

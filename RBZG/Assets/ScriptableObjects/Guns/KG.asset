@@ -24,5 +24,8 @@ MonoBehaviour:
   recoil: 14
   kickback: 0.3
   aimSpeed: 8
-  prefab: {fileID: 5756846110325793797, guid: b9e1ad582b8e5a24790f7fd9fee3cd0d, type: 3}
+  prefab: {fileID: 506274403659205379, guid: 2e030845146ad4a45871fc411e94d98c, type: 3}
+  bulletholePrefab: {fileID: 1349480501025656404, guid: 2c8b1b3219ea4a249be6f0a353f69fc7, type: 3}
   recovery: 1
+  stash: 24
+  clip: 6

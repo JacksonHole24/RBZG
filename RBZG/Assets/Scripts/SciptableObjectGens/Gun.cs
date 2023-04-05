@@ -20,6 +20,7 @@ namespace RBZG
         public float kickback;
         public float aimSpeed;
         public GameObject prefab;
+        public GameObject bulletholePrefab;
         public bool recovery;
 
         public int stash; //current ammo

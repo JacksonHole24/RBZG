@@ -21,18 +21,20 @@ namespace RBZG
         {
             cursorLocked = true;
 
+            UpdateCursorLock();
+
             camCenter = cams.localRotation; //set rotation origin for cameras to camCenter
         }
 
         private void Update()
         {
-            UpdateCursorLock();
+            SetY();
+            SetX();
         }
 
         private void FixedUpdate()
         {
-            SetY();
-            SetX();
+            
         }
 
         void SetY()
