@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace RBZG
 {
@@ -21,8 +23,6 @@ namespace RBZG
 
         [HideInInspector] public bool isAiming;
         private Weapon weaponScript;
-
-        [SerializeField] int health;
 
         [SerializeField] float speed;
         [SerializeField] float sprintModifier;
@@ -277,22 +277,6 @@ namespace RBZG
             {
                 UI_crosshair.SetActive(true);
             }
-        }
-
-        public void TakeDamage(int damage)
-        {
-            health -= damage;
-
-            if (health <= 0)
-            {
-                Death();
-            }
-        }
-
-        private void Death()
-        {
-            GetComponent<MouseLook>().enabled = false;
-            GetComponent<Player>().enabled = false;
         }
     }
 }

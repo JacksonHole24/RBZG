@@ -184,9 +184,12 @@ namespace RBZG
                     if (t_hit.transform.gameObject.tag == "Enemy")
                     {
                         GameObject enemy = t_hit.transform.gameObject;
-                        EnemyAI enemyAI = enemy.transform.parent.parent.GetComponent<EnemyAI>();
+                        ZombieHealth enemyHealth = enemy.GetComponent<ZombieHealth>();
 
-                        enemyAI.TakeDamage(loadout[currentIndex].damage);
+                        if (!enemyHealth.isDead)
+                        {
+                            enemyHealth.TakeDamage(loadout[currentIndex].damage);
+                        }
                     }
                     else
                     {

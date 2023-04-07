@@ -6,8 +6,7 @@ public class ZombieAI : MonoBehaviour
 {
     [Tooltip("The layers that zombies should avoid.")]
     public LayerMask obstacleMask;
-    [Tooltip("The player's transform.")]
-    public Transform player;
+    private Transform player;
     [Tooltip("The radius of the sphere around the player where zombies should spawn.")]
     public float chasePlayerRadius = 10.0f;
     [Tooltip("The minimum time in seconds before the zombie updates the player's position.")]
@@ -18,12 +17,19 @@ public class ZombieAI : MonoBehaviour
     public float minMoveSpeed = 1.0f;
     [Tooltip("The maximum speed at which the zombie moves.")]
     public float maxMoveSpeed = 5.0f;
+    [Tooltip("The distance at which the zombie will stop running to random points and run directly to the player.")]
+    public float stopChaseDistance = 5.0f;
+    [Tooltip("The distance at which the zombie will attack the player.")]
+    public float attackRange = 1.0f;
+    [SerializeField] int damage = 25;
 
     private NavMeshAgent agent;                  // zombie's NavMeshAgent component
     private float nextUpdateTime;                // time until next update of player's position
     private float moveSpeed;                     // speed at which the zombie moves
-
+    private bool isChasingPlayer = false;        // flag to indicate if zombie is chasing player
     private Coroutine LookCoroutine = null;
+    private Animator animator;
+    [HideInInspector] public bool dead = false;
 
     void Start()
     {
@@ -42,16 +48,21 @@ public class ZombieAI : MonoBehaviour
 
         // set initial update time
         nextUpdateTime = Time.time + Random.Range(minReactionTime, maxReactionTime);
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
+        if (dead) return;
         UpdateAnimator();
         startRotation();
     }
 
     void FixedUpdate()
     {
+        if(dead) return;
+
         // check if it's time to update player's position
         if (Time.time >= nextUpdateTime)
         {
@@ -60,6 +71,25 @@ public class ZombieAI : MonoBehaviour
 
             // set new update time
             nextUpdateTime = Time.time + Random.Range(minReactionTime, maxReactionTime);
+        }
+
+        // check if zombie is within stop chase distance of player
+        if (Vector3.Distance(transform.position, player.position) <= stopChaseDistance)
+        {
+            // stop chasing random points and run directly to player
+            agent.SetDestination(player.position);
+            isChasingPlayer = true;
+
+            // check if zombie is within attack range of player
+            if (Vector3.Distance(transform.position, player.position) <= attackRange)
+            {
+                // call attack function
+                Attack();
+            }
+        }
+        else
+        {
+            isChasingPlayer = false;
         }
     }
 
@@ -82,8 +112,6 @@ public class ZombieAI : MonoBehaviour
             time += Time.deltaTime * LookSpeed();
             yield return null;
         }
-
-
     }
 
     private float LookSpeed()
@@ -104,19 +132,35 @@ public class ZombieAI : MonoBehaviour
     // set random destination within spawn radius around player
     void SetRandomDestination()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * chasePlayerRadius;
-        randomDirection += player.position;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, chasePlayerRadius, 1);
-        agent.SetDestination(hit.position);
+        if (!isChasingPlayer)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * chasePlayerRadius;
+            randomDirection += player.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, chasePlayerRadius, 1);
+            agent.SetDestination(hit.position);
+        }
     }
 
     private void UpdateAnimator()
     {
         Vector3 velocity = agent.velocity;
         Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-        float speed = localVelocity.z;
-        Animator animator = GetComponentInChildren<Animator>();
-        animator.SetFloat("forwardMovement", speed);
+        float forwardSpeed = localVelocity.z;
+        float horizontalSpeed = localVelocity.x;
+        animator.SetFloat("forwardMovement", forwardSpeed);
+        animator.SetFloat("horizontalMovement", horizontalSpeed);
+    }
+
+    // empty attack function
+    private void Attack()
+    {
+        animator.SetTrigger("attack");
+    }
+
+    public void Hit(GameObject playerHit)
+    {
+        PlayerHealth playerHealth = playerHit.GetComponent<PlayerHealth>();
+        playerHealth.TakeDamage(damage);
     }
 }
