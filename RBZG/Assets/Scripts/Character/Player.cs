@@ -15,9 +15,6 @@ namespace RBZG
         private Vector3 targetWeaponBobPosition;
         private Vector3 weaponParentCurrentPosition;
 
-        private Text UI_ammo;
-        private GameObject UI_crosshair;
-
         private float movementCounter;
         private float idleCounter;
 
@@ -66,20 +63,22 @@ namespace RBZG
         [SerializeField] Transform deathCamPos;
         [SerializeField] float deathCamTransitionTime;
 
+        private HUDManager hudManager;
+
+        private void Awake()
+        {
+            controller = GetComponent<CharacterController>();
+            weaponScript = GetComponent<Weapon>();
+            hudManager = FindObjectOfType<HUDManager>();
+        }
 
         private void Start()
         {
             baseFOV = normalCam.fieldOfView;
             origin = normalCam.transform.localPosition;
 
-            controller = GetComponent<CharacterController>();
-            weaponScript = GetComponent<Weapon>();
-
             weaponParentOrigin = weaponParent.localPosition;
             weaponParentCurrentPosition = weaponParentOrigin;
-
-            UI_ammo = GameObject.Find("HUD/Ammo/Text").GetComponent<Text>();
-            UI_crosshair = GameObject.Find("HUD/Crosshair/Image");
         }
         private void Update()
         {
@@ -135,7 +134,7 @@ namespace RBZG
 
 
             //UI Refreshes
-            weaponScript.RefreshAmmo(UI_ammo);
+            hudManager.UpdateAmmoCount(weaponScript.GetCurrentWeapon().GetClip(), weaponScript.GetCurrentWeapon().GetStash());
             RefreshCrosshair();
         }
 
@@ -271,11 +270,11 @@ namespace RBZG
         {
             if (isAiming)
             {
-                UI_crosshair.SetActive(false);
+                hudManager.UpdateCrosshair(false);
             }
             else
             {
-                UI_crosshair.SetActive(true);
+                hudManager.UpdateCrosshair(true);
             }
         }
     }

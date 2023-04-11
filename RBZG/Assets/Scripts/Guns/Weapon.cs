@@ -18,6 +18,7 @@ namespace RBZG
         private bool isReloading;
 
         private Player playerScript;
+
         void Start()
         {
             playerScript = FindObjectOfType<Player>();
@@ -231,11 +232,9 @@ namespace RBZG
             isReloading = false;
         }
 
-        public void RefreshAmmo(Text p_text)
+        public Gun GetCurrentWeapon()
         {
-            int t_clip = loadout[currentIndex].GetClip();
-            int t_stash = loadout[currentIndex].GetStash();
-            p_text.text = t_clip.ToString("D2") + " / " + t_stash.ToString("D2");
+            return loadout[currentIndex];
         }
     }
 }

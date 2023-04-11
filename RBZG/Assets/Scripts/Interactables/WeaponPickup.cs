@@ -17,8 +17,17 @@ namespace RBZG
         private bool isColliding;
         private GameObject player;
 
+        private HUDManager hudManager;
+
+        private void Awake()
+        {
+            hudManager = FindObjectOfType<HUDManager>();
+        }
+
         private void Start()
         {
+            hudManager.UpdatePickUpText(false);
+
             foreach (Transform t in gunDisplay.transform) Destroy(t.gameObject);
 
             GameObject newDisplay = Instantiate(weapon.prefab, gunDisplay.transform.position, gunDisplay.transform.rotation);
@@ -54,7 +63,7 @@ namespace RBZG
         {
             if (other.gameObject.tag == "Player")
             {
-                pickupText.SetActive(true);
+                hudManager.UpdatePickUpText(true);
                 isColliding = true;
                 player = other.gameObject;
             }
@@ -65,7 +74,7 @@ namespace RBZG
             if (other.gameObject.tag == "Player")
             {
                 isColliding = false;
-                pickupText.SetActive(false);
+                hudManager.UpdatePickUpText(false);
             }
         }
 
@@ -73,7 +82,7 @@ namespace RBZG
         {
             wait = cooldown;
             isDisabled = true;
-            pickupText.SetActive(false);
+            hudManager.UpdatePickUpText(false);
 
             foreach (GameObject a in targets)
             {
