@@ -1,13 +1,18 @@
-using RBZG;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
-    [Tooltip("The zombie prefab to spawn.")]
-    public List<Zombie> zombies;
+    [Header("Zombie Types")]
+    [Tooltip("The walker zombie type scriptable object.")]
+    public List<Zombie> walkerZombies;
+    [Tooltip("The jogger zombie type scriptable object.")]
+    public List<Zombie> joggerZombie;
+    [Tooltip("The runner zombie type scriptable object.")]
+    public List<Zombie> runnerZombie;
+
+    [Header("Spawn Stats")]
     [Tooltip("The radius of the sphere cast.")]
     public float spawnRadius = 10f;
     [Tooltip("The minimum number of zombies to spawn per tick.")]
@@ -23,6 +28,12 @@ public class ZombieSpawner : MonoBehaviour
     [Tooltip("The time to wait between rounds.")]
     public float roundDelay = 5f;
 
+    [Header("Waves")]
+    [Tooltip("All the wave changes scriptable objects")]
+    public List<Wave> waveChanges;
+    [Tooltip("Place the wave generator scriptable object")]
+    public WaveGenerator waveGenerator;
+
     private int emptyCount = 0;
     private Collider[] colliders;
     private int spawnedZombies = 0;
@@ -32,6 +43,16 @@ public class ZombieSpawner : MonoBehaviour
     [HideInInspector] public int zombiesKilledThisRound = 0;
     private bool roundHasChanged = false;
     private int extraZombiesPerRound = 0;
+    private float minJoggerZombies = 0f;
+    private float maxJoggerZombies = 0f;
+    private int joggerZomsToSpawn = 0;
+    private int joggerZomsSpawned = 0;
+    private float minRunnerZombies = 0f;
+    private float maxRunnerZombies = 0f;
+    private int runnerZomsToSpawn = 0;
+    private int runnerZomsSpawned = 0;
+
+
 
     private HUDManager hudManager;
 
@@ -51,59 +72,31 @@ public class ZombieSpawner : MonoBehaviour
     private IEnumerator StartSpawning()
     {
         yield return new WaitForSeconds(roundDelay);
-        switch (currentRound)
+        foreach (Wave x in waveChanges)
         {
-            case 2:
-                extraZombiesPerRound = 5; break;
-            case 5:
-                extraZombiesPerRound = 6; break;
-            case 7:
-                extraZombiesPerRound = 1; break;
-            case 10:
-                extraZombiesPerRound = 3; break;
-            case 15:
-                extraZombiesPerRound = 4; break;
-            case 25:
-                extraZombiesPerRound = 5; break;
-            case 32:
-                extraZombiesPerRound = 6; break;
-            case 36:
-                extraZombiesPerRound = 7; break;
-            case 39:
-                extraZombiesPerRound = 8; break;
-            case 48:
-                extraZombiesPerRound = 9; break;
-            case 54:
-                extraZombiesPerRound = 10; break;
-            case 60:
-                extraZombiesPerRound = 12; break;
-            case 70:
-                extraZombiesPerRound = 13; break;
-            case 77:
-                extraZombiesPerRound = 14; break;
-            case 83:
-                extraZombiesPerRound = 15; break;
-            case 90:
-                extraZombiesPerRound = 16; break;
-            case 95:
-                extraZombiesPerRound = 17; break;
-            case 100:
-                extraZombiesPerRound = 18; break;
-            case 105:
-                extraZombiesPerRound = 19; break;
-            case 110:
-                extraZombiesPerRound = 20; break;
-            case 130:
-                extraZombiesPerRound = 30; break;
-            default:
-                break;
+            if(x.wave == currentRound)
+            {
+                extraZombiesPerRound = x.extraZombiesPerWave;
+
+                minJoggerZombies = x.newMinRunnersPerWave;
+                maxJoggerZombies = x.newMaxRunnersPerWave;
+
+                minRunnerZombies = x.newMinRunnersPerWave;
+                maxRunnerZombies = x.newMaxRunnersPerWave;
+            }
         }
+
         zombiesToSpawnThisRound = zombiesKilledThisRound + extraZombiesPerRound;
         zombiesKilledThisRound = 0;
         spawnedZombies = 0;
         zombiesToSpawnThisRound = totalZombiesToSpawn * currentRound;
         roundHasChanged = false;
+
+        runnerZomsToSpawn = GetZombieChance(minRunnerZombies, maxRunnerZombies);
+
+        joggerZomsToSpawn = GetZombieChance(minJoggerZombies, maxJoggerZombies);
     }
+
 
     private void Update()
     {
@@ -141,11 +134,21 @@ public class ZombieSpawner : MonoBehaviour
                         {
                             if (currentIndex == randomIndex)
                             {
-                                int ran = Random.Range(0, zombies.Count);
-                                GameObject instantiated = Instantiate(zombies[ran].prefab, collider.transform.position, Quaternion.identity);
-                                instantiated.GetComponent<ZombieAI>().zombieStats = zombies[ran];
-                                spawnedZombies++;
-                                print(spawnedZombies);
+                                if(joggerZomsToSpawn > 0 && joggerZomsSpawned < joggerZomsToSpawn)
+                                {
+                                    SpawnZombie(collider, joggerZombie);
+                                    joggerZomsSpawned++;
+                                }
+                                if (runnerZomsToSpawn > 0 && runnerZomsSpawned < runnerZomsToSpawn)
+                                {
+                                    SpawnZombie(collider, runnerZombie);
+                                    runnerZomsSpawned++;
+                                }
+                                else
+                                {
+                                    SpawnZombie(collider, walkerZombies);
+                                }
+                                
                                 break;
                             }
                             currentIndex++;
@@ -169,6 +172,28 @@ public class ZombieSpawner : MonoBehaviour
                 emptyCount++;
             }
         }
+    }
+
+    private void SpawnZombie(Collider spawnCollider, List<Zombie> zomList)
+    {
+        int ran = Random.Range(0, zomList.Count);
+        GameObject instantiated = Instantiate(zomList[ran].prefab, spawnCollider.transform.position, Quaternion.identity);
+        instantiated.GetComponent<ZombieAI>().zombieStats = zomList[ran];
+        spawnedZombies++;
+        print(spawnedZombies);
+        print(instantiated.GetComponent<ZombieAI>().zombieStats.zombieType);
+    }
+
+    private int GetZombieChance(float min, float max)
+    {
+        float chance = Random.Range(min, max);
+        if (chance > 0)
+        {
+            float zomsToSpawnFloat = 0;
+            zomsToSpawnFloat = zombiesToSpawnThisRound * chance;
+            return (int)zomsToSpawnFloat;
+        }
+        else return 0;
     }
 
     private void OnDrawGizmosSelected()

@@ -1,6 +1,7 @@
 using RBZG;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class ZombieSpawner1 : MonoBehaviour
@@ -19,6 +20,8 @@ public class ZombieSpawner1 : MonoBehaviour
     public float maxSpawnTime = 5f;
     [Tooltip("The total number of zombies to spawn.")]
     public int totalZombiesToSpawn = 10;
+    [Tooltip("The time to wait between rounds.")]
+    public float roundDelay = 5f;
 
     private int emptyCount = 0;
     private Collider[] colliders;
@@ -27,6 +30,8 @@ public class ZombieSpawner1 : MonoBehaviour
     private int currentRound = 1;
     private int zombiesToSpawnThisRound = 0;
     [HideInInspector] public int zombiesKilledThisRound = 0;
+    private bool roundHasChanged = false;
+    private int extraZombiesPerRound = 0;
 
     private HUDManager hudManager;
 
@@ -37,18 +42,80 @@ public class ZombieSpawner1 : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(StartSpawning());
+
         zombiesToSpawnThisRound = totalZombiesToSpawn;
+        spawnedZombies = totalZombiesToSpawn;
+    }
+
+    private IEnumerator StartSpawning()
+    {
+        yield return new WaitForSeconds(roundDelay);
+        switch (currentRound)
+        {
+            case 2:
+                extraZombiesPerRound = 5; break;
+            case 5:
+                extraZombiesPerRound = 6; break;
+            case 7:
+                extraZombiesPerRound = 1; break;
+            case 10:
+                extraZombiesPerRound = 3; break;
+            case 15:
+                extraZombiesPerRound = 4; break;
+            case 25:
+                extraZombiesPerRound = 5; break;
+            case 32:
+                extraZombiesPerRound = 6; break;
+            case 36:
+                extraZombiesPerRound = 7; break;
+            case 39:
+                extraZombiesPerRound = 8; break;
+            case 48:
+                extraZombiesPerRound = 9; break;
+            case 54:
+                extraZombiesPerRound = 10; break;
+            case 60:
+                extraZombiesPerRound = 12; break;
+            case 70:
+                extraZombiesPerRound = 13; break;
+            case 77:
+                extraZombiesPerRound = 14; break;
+            case 83:
+                extraZombiesPerRound = 15; break;
+            case 90:
+                extraZombiesPerRound = 16; break;
+            case 95:
+                extraZombiesPerRound = 17; break;
+            case 100:
+                extraZombiesPerRound = 18; break;
+            case 105:
+                extraZombiesPerRound = 19; break;
+            case 110:
+                extraZombiesPerRound = 20; break;
+            case 130:
+                extraZombiesPerRound = 30; break;
+            default:
+                break;
+        }
+        zombiesToSpawnThisRound = zombiesKilledThisRound + extraZombiesPerRound;
+        zombiesKilledThisRound = 0;
+        spawnedZombies = 0;
+        zombiesToSpawnThisRound = totalZombiesToSpawn * currentRound;
+        roundHasChanged = false;
     }
 
     private void Update()
     {
-        if (zombiesKilledThisRound >= zombiesToSpawnThisRound)
+        if(!roundHasChanged)
         {
-            currentRound++;
-            hudManager.UpdateRoundText(currentRound);
-            zombiesKilledThisRound = 0;
-            spawnedZombies = 0;
-            zombiesToSpawnThisRound = totalZombiesToSpawn * currentRound;
+            if (zombiesKilledThisRound >= zombiesToSpawnThisRound)
+            {
+                currentRound++;
+                hudManager.UpdateRoundText(currentRound);
+                StartCoroutine(StartSpawning());
+                roundHasChanged = true;
+            }
         }
 
         spawnTimer -= Time.deltaTime;
@@ -78,7 +145,7 @@ public class ZombieSpawner1 : MonoBehaviour
                                 GameObject instantiated = Instantiate(zombies[ran].prefab, collider.transform.position, Quaternion.identity);
                                 instantiated.GetComponent<ZombieAI>().zombieStats = zombies[ran];
                                 spawnedZombies++;
-                                Debug.Log(spawnedZombies);
+                                print(spawnedZombies);
                                 break;
                             }
                             currentIndex++;

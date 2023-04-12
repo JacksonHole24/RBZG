@@ -1,0 +1,100 @@
+        switch (currentRound)
+        {
+            case 2:
+                extraZombiesPerRound = 5;
+                minJoggerZombies = 0;
+                maxJoggerZombies = 0.1f;
+                break;
+            case 5:
+                extraZombiesPerRound = 6;
+                minJoggerZombies = 0.1f;
+                maxJoggerZombies = 0.2f;
+                break;
+            case 7:
+                extraZombiesPerRound = 1;
+                minJoggerZombies = 0.2f;
+                maxJoggerZombies = 0.5f;
+                break;
+            case 10:
+                extraZombiesPerRound = 3;
+                minJoggerZombies = 0.3f;
+                maxJoggerZombies = 0.5f;
+                minRunnerZombies = 0;
+                maxRunnerZombies = 0.1f;
+                break;
+            case 15:
+                extraZombiesPerRound = 4;
+                minJoggerZombies = 0.4f;
+                maxJoggerZombies = 0.7f;
+                minRunnerZombies = 0.1f;
+                maxRunnerZombies = 0.3f;
+                break;
+            case 25:
+                extraZombiesPerRound = 5; 
+                
+                break;
+            case 32:
+                extraZombiesPerRound = 6; 
+                
+                break;
+            case 36:
+                extraZombiesPerRound = 7; 
+                
+                break;
+            case 39:
+                extraZombiesPerRound = 8; 
+                
+                break;
+            case 48:
+                extraZombiesPerRound = 9; 
+                
+                break;
+            case 54:
+                extraZombiesPerRound = 10; 
+                
+                break;
+            case 60:
+                extraZombiesPerRound = 12; 
+                
+                break;
+            case 70:
+                extraZombiesPerRound = 13; 
+                
+                break;
+            case 77:
+                extraZombiesPerRound = 14; 
+                
+                break;
+            case 83:
+                extraZombiesPerRound = 15; 
+                
+                break;
+            case 90:
+                extraZombiesPerRound = 16; 
+                
+                break;
+            case 95:
+                extraZombiesPerRound = 17; 
+                
+                break;
+            case 100:
+                extraZombiesPerRound = 18; 
+                
+                break;
+            case 105:
+                extraZombiesPerRound = 19; 
+                
+                break;
+            case 110:
+                extraZombiesPerRound = 20; 
+                
+                break;
+            case 130:
+                extraZombiesPerRound = 30; 
+                
+                break;
+
+            default:
+
+                break;
+        }

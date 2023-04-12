@@ -24,6 +24,7 @@ MonoBehaviour:
   stopChaseDistance: 10
   attackRange: 2.5
   damage: 25
+  zombieType: Jogger
   isWalker: 0
   isJogger: 1
   isRunner: 0

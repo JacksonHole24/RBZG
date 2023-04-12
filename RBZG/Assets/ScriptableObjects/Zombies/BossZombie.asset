@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BossZombie
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  animators: []
   chasePlayerRadius: 10
   minReactionTime: 1
   maxReactionTime: 3
@@ -21,7 +22,8 @@ MonoBehaviour:
   stopChaseDistance: 5
   attackRange: 1
   damage: 25
+  zombieType: Boss
   isWalker: 0
   isJogger: 0
   isRunner: 0
-  isBoss: 0
+  isBoss: 1

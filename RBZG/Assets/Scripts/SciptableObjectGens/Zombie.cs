@@ -37,6 +37,8 @@ public class Zombie : ScriptableObject
     public int damage = 25;
 
     [Header("Zombie Type")]
+    [Tooltip("This is just for debugging purposes and is just the name of the zombie type.")]
+    public string zombieType;
     [Tooltip("Is it a walker zombie.")]
     public bool isWalker;
     [Tooltip("Is it a jogging zombie.")]

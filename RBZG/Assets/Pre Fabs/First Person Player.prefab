@@ -353,9 +353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1658b18e3812bcf48b3d80d163ebdd58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zombies:
+  walkerZombies:
   - {fileID: 11400000, guid: 7893464a93644774f93d7bf9c7c0a0ba, type: 2}
+  joggerZombie:
   - {fileID: 11400000, guid: f6363c650a40db040883787e6ebd7219, type: 2}
+  runnerZombie:
   - {fileID: 11400000, guid: 04f718a8586c5304c8f56d0ae9d051d8, type: 2}
   spawnRadius: 50
   minSpawnCount: 1
@@ -364,6 +366,8 @@ MonoBehaviour:
   maxSpawnTime: 5
   totalZombiesToSpawn: 6
   roundDelay: 10
+  waveChanges: []
+  waveGenerator: {fileID: 11400000, guid: 137470fef2e069e4e85b4247bac77dc7, type: 2}
   zombiesKilledThisRound: 0
 --- !u!114 &8799651692814031625
 MonoBehaviour:
