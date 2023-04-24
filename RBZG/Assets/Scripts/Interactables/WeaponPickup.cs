@@ -10,7 +10,6 @@ namespace RBZG
         public float cooldown;
         public GameObject gunDisplay;
         public List<GameObject> targets;
-        public GameObject pickupText;
 
         private bool isDisabled;
         private float wait;
