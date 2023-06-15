@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RBZG
 {
@@ -17,6 +18,9 @@ namespace RBZG
         public float maxAngle;
 
         private Quaternion camCenter;
+
+        Vector2 input;
+
         void Start()
         {
             cursorLocked = true;
@@ -37,9 +41,14 @@ namespace RBZG
             
         }
 
+        public void RecieveInput(Vector2 _camera)
+        {
+            input = _camera;
+        }
+
         void SetY()
         {
-            float t_input = Input.GetAxis("Mouse Y") * ySensitivity * Time.deltaTime;
+            float t_input = input.y * ySensitivity * Time.deltaTime;
             Quaternion t_adj = Quaternion.AngleAxis(t_input, -Vector3.right);
             Quaternion t_delta = cams.localRotation * t_adj;
 
@@ -52,7 +61,7 @@ namespace RBZG
 
         void SetX()
         {
-            float t_input = -Input.GetAxis("Mouse X") * xSensitivity * Time.deltaTime;
+            float t_input = -input.x * xSensitivity * Time.deltaTime;
             Quaternion t_adj = Quaternion.AngleAxis(t_input, -Vector3.up);
             Quaternion t_delta = player.localRotation * t_adj;
             player.localRotation = t_delta;

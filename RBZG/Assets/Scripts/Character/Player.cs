@@ -55,6 +55,7 @@ namespace RBZG
         private float slide_time;
         private Vector3 slide_dir;
 
+        Vector2 horizontalInput;
         private float t_vmove;
         private float t_hmove;
         private Vector3 t_direction;
@@ -63,6 +64,11 @@ namespace RBZG
         [SerializeField] float deathCamTransitionTime;
 
         private HUDManager hudManager;
+
+        bool jump = false;
+        bool sprint = false;
+        bool slide = false;
+        bool crouch = false;
 
         private void Awake()
         {
@@ -79,18 +85,12 @@ namespace RBZG
             weaponParentOrigin = weaponParent.localPosition;
             weaponParentCurrentPosition = weaponParentOrigin;
         }
+
         private void Update()
         {
             //Axis
-            t_hmove = Input.GetAxis("Horizontal");
-            t_vmove = Input.GetAxis("Vertical");
-
-
-            //controls
-            bool slide = Input.GetKeyDown(KeyCode.C);
-            bool jump = Input.GetKeyDown(KeyCode.Space);
-            bool sprint = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-            bool crouch = Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl);
+            t_hmove = horizontalInput.x;
+            t_vmove = horizontalInput.y;
 
             //states
             bool isJumping = jump;
@@ -239,6 +239,7 @@ namespace RBZG
             }
         }
 
+
         void SetCrouch(bool p_state)
         {
             if (crouched == p_state) return;
@@ -276,5 +277,31 @@ namespace RBZG
                 hudManager.UpdateCrosshair(true);
             }
         }
+
+        public void ReceicveMoveInput(Vector2 _horizontalInput)
+        {
+            horizontalInput = _horizontalInput;
+        }
+
+        public void ReceicveJumpInput(bool _jump)
+        {
+            jump = _jump;
+        }
+
+        public void ReceicveSprintInput(bool _sprint)
+        {
+            sprint = _sprint;
+        }
+
+        public void ReceicveSlideInput(bool _slide)
+        {
+            slide = _slide;
+        }
+
+        public void ReceicveCrouchInput(bool _crouch)
+        {
+            crouch = _crouch;
+        }
+
     }
 }

@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 2360474132356100247}
   - component: {fileID: 7284090343655272560}
   - component: {fileID: 8799651692814031625}
+  - component: {fileID: 2743821456584246590}
   m_Layer: 6
   m_Name: First Person Player
   m_TagString: Player
@@ -386,6 +387,20 @@ MonoBehaviour:
   regenerationRate: 100
   canRegenerate: 1
   regenerationTimer: 0
+--- !u!114 &2743821456584246590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451106428542498700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f42754180bc2a4e9cb43acc3ca971a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2360474132356100247}
+  mouseLook: {fileID: 1396377105976587955}
 --- !u!1 &5543771004173668571
 GameObject:
   m_ObjectHideFlags: 0
