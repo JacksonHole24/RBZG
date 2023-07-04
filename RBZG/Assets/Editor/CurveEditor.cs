@@ -175,9 +175,10 @@ public class CurveEditor : EditorWindow
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(_curve.smoothAmount.ToString(), EditorStyles.boldLabel, GUILayout.Width(40), GUILayout.Height(20));
+            int smoothInt = (int)_curve.smoothAmount;
+            EditorGUILayout.LabelField(smoothInt.ToString() + "%" + " Smoothing", EditorStyles.boldLabel, GUILayout.Width(100), GUILayout.Height(20));
             _curve.smoothAmount = GUILayout.HorizontalSlider(_curve.smoothAmount, 10f, 100f);
-            if (GUILayout.Button("Smoother Curve", GUILayout.Width(150), GUILayout.Height(20)))
+            if (GUILayout.Button("Smooth Curve", GUILayout.Width(150), GUILayout.Height(20)))
             {
                 Curve curve = new Curve();
                 curve.curve1 = new AnimationCurve(_curve.curve1.keys);

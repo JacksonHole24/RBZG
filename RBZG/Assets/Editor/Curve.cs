@@ -31,5 +31,5 @@ public class Curve
     [HideInInspector] public bool hasBeenSaved = false;
     [Range(10f, 100f)]
     [HideInInspector] public float smoothAmount = 20f;
-    public bool canBeDeleted = false;
+    [HideInInspector] public bool canBeDeleted = false;
 }
