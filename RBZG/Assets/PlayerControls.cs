@@ -42,8 +42,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""766eecc8-5efc-4728-9939-93c766437514"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Run"",
@@ -51,7 +51,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""7f32f0cd-2d73-4db1-bcd8-ae9753194dd1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -60,17 +60,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""4ac38691-48b4-43d4-8ecc-0412505543b5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Slide"",
-                    ""type"": ""Button"",
-                    ""id"": ""3a890723-0a04-4be0-8321-57013c1f9ac9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -220,7 +211,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""51420c34-2575-4c00-8a04-baafb4085c77"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -247,28 +238,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""142cbc70-ebe5-46e8-a5d4-4509f3dbb3c5"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Controller"",
-                    ""action"": ""Slide"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a7366ed3-4d33-484a-b604-bb881849f971"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -367,7 +336,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""e9cb89d1-22e5-41e8-b2b4-2017ff43e464"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -376,16 +345,34 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""id"": ""9b8f356f-a9ba-44e2-a008-ac26df5e9055"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Aim"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""05963ced-9435-4565-b53a-de5054dc4ebc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""49cb7a67-d9af-4e08-b4c7-31fd6162f71d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ChangeWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""40d7d185-a39d-45c4-af1c-b5faa05ee8f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": true
                 }
             ],
@@ -455,6 +442,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f26eadc8-b112-47a3-9727-e28d4b42a3f0"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15550f4b-a3ef-4988-9289-d25542f9f496"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bde6b34-ddde-4368-b649-ed65bf71cc84"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74c243d3-8796-43fe-ada1-7818737f10f6"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ChangeWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -495,7 +526,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Run = m_Movement.FindAction("Run", throwIfNotFound: true);
         m_Movement_Crouch = m_Movement.FindAction("Crouch", throwIfNotFound: true);
-        m_Movement_Slide = m_Movement.FindAction("Slide", throwIfNotFound: true);
         // CameraLook
         m_CameraLook = asset.FindActionMap("CameraLook", throwIfNotFound: true);
         m_CameraLook_Look = m_CameraLook.FindAction("Look", throwIfNotFound: true);
@@ -504,6 +534,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Interaction_Interact = m_Interaction.FindAction("Interact", throwIfNotFound: true);
         m_Interaction_Fire = m_Interaction.FindAction("Fire", throwIfNotFound: true);
         m_Interaction_Aim = m_Interaction.FindAction("Aim", throwIfNotFound: true);
+        m_Interaction_Reload = m_Interaction.FindAction("Reload", throwIfNotFound: true);
+        m_Interaction_ChangeWeapon = m_Interaction.FindAction("ChangeWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -567,7 +599,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Run;
     private readonly InputAction m_Movement_Crouch;
-    private readonly InputAction m_Movement_Slide;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -576,7 +607,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Run => m_Wrapper.m_Movement_Run;
         public InputAction @Crouch => m_Wrapper.m_Movement_Crouch;
-        public InputAction @Slide => m_Wrapper.m_Movement_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -598,9 +628,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Crouch.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnCrouch;
-                @Slide.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
-                @Slide.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
-                @Slide.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnSlide;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -617,9 +644,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
-                @Slide.started += instance.OnSlide;
-                @Slide.performed += instance.OnSlide;
-                @Slide.canceled += instance.OnSlide;
             }
         }
     }
@@ -664,6 +688,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Interaction_Interact;
     private readonly InputAction m_Interaction_Fire;
     private readonly InputAction m_Interaction_Aim;
+    private readonly InputAction m_Interaction_Reload;
+    private readonly InputAction m_Interaction_ChangeWeapon;
     public struct InteractionActions
     {
         private @PlayerControls m_Wrapper;
@@ -671,6 +697,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Interaction_Interact;
         public InputAction @Fire => m_Wrapper.m_Interaction_Fire;
         public InputAction @Aim => m_Wrapper.m_Interaction_Aim;
+        public InputAction @Reload => m_Wrapper.m_Interaction_Reload;
+        public InputAction @ChangeWeapon => m_Wrapper.m_Interaction_ChangeWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -689,6 +717,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Aim.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnAim;
+                @Reload.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnReload;
+                @ChangeWeapon.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnChangeWeapon;
+                @ChangeWeapon.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnChangeWeapon;
+                @ChangeWeapon.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnChangeWeapon;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -702,6 +736,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
+                @ChangeWeapon.started += instance.OnChangeWeapon;
+                @ChangeWeapon.performed += instance.OnChangeWeapon;
+                @ChangeWeapon.canceled += instance.OnChangeWeapon;
             }
         }
     }
@@ -730,7 +770,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnSlide(InputAction.CallbackContext context);
     }
     public interface ICameraLookActions
     {
@@ -741,5 +780,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
+        void OnChangeWeapon(InputAction.CallbackContext context);
     }
 }

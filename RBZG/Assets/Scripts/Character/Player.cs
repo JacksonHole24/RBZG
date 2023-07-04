@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 namespace RBZG
 {
@@ -39,6 +40,7 @@ namespace RBZG
 
         private bool isGrounded;
         private bool isSprinting;
+        private bool isCrouching;
         private bool crouched;
 
         [SerializeField] float jumpHeight;
@@ -95,13 +97,12 @@ namespace RBZG
             //states
             bool isJumping = jump;
             isSprinting = sprint && t_vmove > 0 && !isJumping && !isAiming;
-            bool isSliding = isSprinting && slide && !sliding && isGrounded;
-            bool isCrouching = crouch && !isSprinting && !isJumping && isGrounded;
 
             //Crouching
-            if (isCrouching)
+            if (crouch && !isSprinting && !isJumping && isGrounded)
             {
                 SetCrouch(!crouched);
+                crouch = false;
             }
 
             //Jumping
@@ -121,14 +122,15 @@ namespace RBZG
 
 
             //Sliding
-            if (isSliding)
+            if (isSprinting && crouch && !sliding && isGrounded)
             {
                 sliding = true;
                 slide_dir = t_direction;
                 slide_time = lengthOfSlide;
                 //adjust the camera
                 weaponParentCurrentPosition += Vector3.down * slideAmount;
-                if (crouched) SetCrouch(true);
+                SetCrouch(!crouched);
+                crouch = false;
             }
 
 
@@ -293,15 +295,12 @@ namespace RBZG
             sprint = _sprint;
         }
 
-        public void ReceicveSlideInput(bool _slide)
+        public void ReceicveCrouchInput(InputAction.CallbackContext ctx)
         {
-            slide = _slide;
+            if (ctx.performed)
+            {
+                crouch = true;
+            }
         }
-
-        public void ReceicveCrouchInput(bool _crouch)
-        {
-            crouch = _crouch;
-        }
-
     }
 }

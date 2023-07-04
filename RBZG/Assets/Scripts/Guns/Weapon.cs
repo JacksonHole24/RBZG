@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Profiling;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace RBZG
@@ -16,6 +18,7 @@ namespace RBZG
         private GameObject currentWeapon;
 
         private bool isReloading;
+        private bool isAiming;
 
         private Player playerScript;
 
@@ -37,8 +40,6 @@ namespace RBZG
 
             if (currentWeapon != null)
             {
-                Aim(Input.GetMouseButton(1));
-
                 if (loadout[currentIndex].fireMode == 0)
                 {
                     //Fire
@@ -126,22 +127,59 @@ namespace RBZG
             }
         }
 
-        private void Aim(bool p_isAiming)
+        public void Aim(InputAction.CallbackContext ctx)
+        {
+            if (ctx.performed)
+            {
+                if(currentWeapon != null)
+                {
+                    Debug.Log("here");
+                    if (!isAiming)
+                    {
+                        Debug.Log("Aim");
+                        StartCoroutine(MoveGunUp());
+                        playerScript.isAiming = true;
+                        isAiming = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Not Aim");
+                        StartCoroutine(MoveGunDown());
+                        playerScript.isAiming = false;
+                        isAiming = false;
+                    }
+                }
+            }
+        }
+
+        private IEnumerator MoveGunUp()
         {
             Transform t_anchor = currentWeapon.transform.Find("Anchor");
             Transform t_state_ads = currentWeapon.transform.Find("States/ADS");
-            Transform t_state_hip = currentWeapon.transform.Find("States/Hip");
 
-            if (p_isAiming)
+            while (t_anchor.position != t_state_ads.position)
             {
                 t_anchor.position = Vector3.Lerp(t_anchor.position, t_state_ads.position, Time.deltaTime * loadout[currentIndex].aimSpeed);
-                playerScript.isAiming = true;
+                yield return null;
             }
-            else
+
+            t_anchor.position = t_state_ads.position;
+            yield return null;
+        }
+
+        private IEnumerator MoveGunDown()
+        {
+            Transform t_anchor = currentWeapon.transform.Find("Anchor");
+            Transform t_state_hip = currentWeapon.transform.Find("States/Hip");
+
+            while (t_anchor.position != t_state_hip.position)
             {
                 t_anchor.position = Vector3.Lerp(t_anchor.position, t_state_hip.position, Time.deltaTime * loadout[currentIndex].aimSpeed);
-                playerScript.isAiming = false;
+                yield return null;
             }
+
+            t_anchor.position = t_state_hip.position;
+            yield return null;
         }
 
         private void Shoot()

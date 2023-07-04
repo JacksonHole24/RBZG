@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
             if (regenerationTimer <= 0f) // If the delay timer has expired
             {
                 health = (int)Mathf.Lerp(health, maxHealth, regenerationRate * Time.deltaTime);
-                Debug.Log(health);
             }
             else
             {

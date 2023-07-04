@@ -20,8 +20,8 @@
                     "id": "766eecc8-5efc-4728-9939-93c766437514",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Run",
@@ -29,7 +29,7 @@
                     "id": "7f32f0cd-2d73-4db1-bcd8-ae9753194dd1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": true
                 },
                 {
@@ -38,17 +38,8 @@
                     "id": "4ac38691-48b4-43d4-8ecc-0412505543b5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Slide",
-                    "type": "Button",
-                    "id": "3a890723-0a04-4be0-8321-57013c1f9ac9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -198,7 +189,7 @@
                 {
                     "name": "",
                     "id": "51420c34-2575-4c00-8a04-baafb4085c77",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -225,28 +216,6 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Crouch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "142cbc70-ebe5-46e8-a5d4-4509f3dbb3c5",
-                    "path": "<Gamepad>/rightStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Slide",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a7366ed3-4d33-484a-b604-bb881849f971",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Slide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -345,7 +314,7 @@
                     "id": "e9cb89d1-22e5-41e8-b2b4-2017ff43e464",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -354,16 +323,34 @@
                     "id": "9b8f356f-a9ba-44e2-a008-ac26df5e9055",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Aim",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "05963ced-9435-4565-b53a-de5054dc4ebc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "49cb7a67-d9af-4e08-b4c7-31fd6162f71d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ChangeWeapon",
+                    "type": "Button",
+                    "id": "40d7d185-a39d-45c4-af1c-b5faa05ee8f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": true
                 }
             ],
@@ -431,6 +418,50 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f26eadc8-b112-47a3-9727-e28d4b42a3f0",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15550f4b-a3ef-4988-9289-d25542f9f496",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bde6b34-ddde-4368-b649-ed65bf71cc84",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "ChangeWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74c243d3-8796-43fe-ada1-7818737f10f6",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "ChangeWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

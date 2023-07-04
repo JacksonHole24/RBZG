@@ -401,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2360474132356100247}
   mouseLook: {fileID: 1396377105976587955}
+  weapon: {fileID: 1235341356885699784}
 --- !u!1 &5543771004173668571
 GameObject:
   m_ObjectHideFlags: 0

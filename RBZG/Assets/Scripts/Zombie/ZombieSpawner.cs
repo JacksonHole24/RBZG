@@ -180,8 +180,6 @@ public class ZombieSpawner : MonoBehaviour
         GameObject instantiated = Instantiate(zomList[ran].prefab, spawnCollider.transform.position, Quaternion.identity);
         instantiated.GetComponent<ZombieAI>().zombieStats = zomList[ran];
         spawnedZombies++;
-        print(spawnedZombies);
-        print(instantiated.GetComponent<ZombieAI>().zombieStats.zombieType);
     }
 
     private int GetZombieChance(float min, float max)
