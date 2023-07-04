@@ -29,5 +29,7 @@ public class Curve
 
     [HideInInspector] public bool isConstant;
     [HideInInspector] public bool hasBeenSaved = false;
-    [HideInInspector] public bool canBeDeleted = true;
+    [Range(10f, 100f)]
+    [HideInInspector] public float smoothAmount = 20f;
+    public bool canBeDeleted = false;
 }

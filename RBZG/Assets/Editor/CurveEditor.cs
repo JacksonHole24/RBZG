@@ -42,7 +42,7 @@ public class CurveEditor : EditorWindow
             finishedEditingCurve = false;
 
             curve = new Curve();
-            curve.canBeDeleted = false;
+            curve.canBeDeleted = true;
         }
 
         if (startedCreatingCurve && !finishedEditingCurve)
@@ -116,7 +116,7 @@ public class CurveEditor : EditorWindow
             if (GUILayout.Button("Delete Curve", GUILayout.Width(150), GUILayout.Height(20)))
             {
                 curves.Remove(_curve);
-                if(_curve.hasBeenSaved || _curve.canBeDeleted)
+                if (_curve.hasBeenSaved || !_curve.canBeDeleted)
                 {
                     Curve[] _curves = new Curve[curveData.curves.Length - 1];
                     for (int i = 0; i < curves.Count; i++)
@@ -126,34 +126,99 @@ public class CurveEditor : EditorWindow
                     curveData.curves = _curves;
                 }
             }
+
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            if(GUILayout.Button("Duplicate Curve", GUILayout.Width(150), GUILayout.Height(20)))
+
+            if (GUILayout.Button("Duplicate Curve", GUILayout.Width(150), GUILayout.Height(20)))
             {
                 Curve curve = new Curve();
-                curve.curve1 = new AnimationCurve();
-                curve.curve1 = _curve.curve1; 
-                curve.canBeDeleted = false;
+                curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                curve.canBeDeleted = true;
                 curves.Add(curve);
             }
+
             if (GUILayout.Button("Reverse X Curve", GUILayout.Width(150), GUILayout.Height(20)))
             {
                 Curve curve = new Curve();
-                curve.curve1 = new AnimationCurve();
-                curve.curve1 = _curve.curve1;
-                curve.canBeDeleted = false;
-                List<Keyframe> keys = new List<Keyframe>();
-                keys.AddRange(curve.curve1.keys);
+                curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                curve.canBeDeleted = true;
+                Keyframe[] originalKeyframes = curve.curve1.keys;
+                int length = originalKeyframes.Length;
+                Keyframe[] reversedKeyframes = new Keyframe[length];
 
-                for (int i = 0, p = curve.curve1.keys.Length - 1; i < curve.curve1.keys.Length; i++, p--)
+                // Reverse the keyframe values
+                for (int i = 0; i < length; i++)
                 {
-                    Keyframe keyframe = curve.curve1.keys[i];
-                    keyframe.value = keys[p].value;
-                    curve.curve1.MoveKey(i, keyframe);
+                    Keyframe originalKeyframe = originalKeyframes[i];
+                    Keyframe reversedKeyframe = new Keyframe(originalKeyframe.time, originalKeyframe.value);
+                    reversedKeyframe.inTangent = -originalKeyframe.inTangent;
+                    reversedKeyframe.outTangent = -originalKeyframe.outTangent;
+                    reversedKeyframes[length - 1 - i] = reversedKeyframe;
                 }
+
+                // Adjust the keyframe positions
+                float firstTime = reversedKeyframes[0].time;
+                float lastTime = reversedKeyframes[length - 1].time;
+                float timeRange = lastTime - firstTime;
+
+                for (int i = 0; i < length; i++)
+                {
+                    Keyframe reversedKeyframe = reversedKeyframes[i];
+                    reversedKeyframe.time = firstTime + (timeRange - reversedKeyframe.time);
+                    reversedKeyframes[i] = reversedKeyframe;
+                }
+
+                curve.curve1.keys = reversedKeyframes;
 
                 curves.Add(curve);
             }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(_curve.smoothAmount.ToString(), EditorStyles.boldLabel, GUILayout.Width(40), GUILayout.Height(20));
+            _curve.smoothAmount = GUILayout.HorizontalSlider(_curve.smoothAmount, 10f, 100f);
+            if (GUILayout.Button("Smoother Curve", GUILayout.Width(150), GUILayout.Height(20)))
+            {
+                Curve curve = new Curve();
+                curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                curve.canBeDeleted = true;
+
+                float smoothAmount = _curve.smoothAmount * 0.01f; // Scale the smooth amount to a 0-1 range
+
+                Keyframe[] keyframes = curve.curve1.keys;
+                Keyframe[] adjustedKeyframes = new Keyframe[keyframes.Length];
+
+                // Copy keyframes to adjustedKeyframes
+                for (int i = 0; i < keyframes.Length; i++)
+                {
+                    adjustedKeyframes[i] = keyframes[i];
+                }
+
+                // Smooth keyframes using Catmull-Rom spline interpolation
+                for (int i = 1; i < adjustedKeyframes.Length - 1; i++)
+                {
+                    Vector2 p0 = new Vector2(adjustedKeyframes[i - 1].time, adjustedKeyframes[i - 1].value);
+                    Vector2 p1 = new Vector2(adjustedKeyframes[i].time, adjustedKeyframes[i].value);
+                    Vector2 p2 = new Vector2(adjustedKeyframes[i + 1].time, adjustedKeyframes[i + 1].value);
+
+                    // Calculate tangents using Catmull-Rom spline formula
+                    float smoothingFactor = Mathf.Lerp(0.5f, 1f, smoothAmount); // Adjust the smoothing factor
+                    Vector2 tangentIn = (p2 - p0) * (0.5f * smoothAmount * smoothingFactor);
+                    Vector2 tangentOut = -tangentIn;
+
+                    // Update the tangents and weights of the current keyframe
+                    adjustedKeyframes[i].inTangent = tangentIn.y / tangentIn.x;
+                    adjustedKeyframes[i].outTangent = tangentOut.y / tangentOut.x;
+                    adjustedKeyframes[i].inWeight = smoothAmount;
+                    adjustedKeyframes[i].outWeight = smoothAmount;
+                }
+
+                curve.curve1.keys = adjustedKeyframes;
+
+                curves.Add(curve); // Add curve to the curves list
+            }
+
+
             GUILayout.EndHorizontal();
         }
         EditorGUILayout.LabelField("Copy a curve out from the curve editor data to use it", EditorStyles.boldLabel, GUILayout.Width(400), GUILayout.Height(20));
