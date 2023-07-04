@@ -33,6 +33,8 @@ public class ZombieSpawner : MonoBehaviour
     public List<Wave> waveChanges;
     [Tooltip("Place the wave generator scriptable object")]
     public WaveGenerator waveGenerator;
+    [Tooltip("x axis is rounds and y axis is amount of zombies")]
+    public AnimationCurve zombieCurve;
 
     private int emptyCount = 0;
     private Collider[] colliders;
@@ -72,12 +74,11 @@ public class ZombieSpawner : MonoBehaviour
     private IEnumerator StartSpawning()
     {
         yield return new WaitForSeconds(roundDelay);
+
         foreach (Wave x in waveChanges)
         {
-            if(x.wave == currentRound)
+            if (x.wave == currentRound)
             {
-                extraZombiesPerRound = x.extraZombiesPerWave;
-
                 minJoggerZombies = x.newMinRunnersPerWave;
                 maxJoggerZombies = x.newMaxRunnersPerWave;
 
@@ -86,17 +87,29 @@ public class ZombieSpawner : MonoBehaviour
             }
         }
 
-        zombiesToSpawnThisRound = zombiesKilledThisRound + extraZombiesPerRound;
+        // Use the Animation Curve to determine the extra zombies per round
+        if (zombieCurve != null)
+        {
+            float zombies = zombieCurve.Evaluate(currentRound);
+            zombiesToSpawnThisRound = Mathf.RoundToInt(zombies);
+        }
+
+        if (zombieCurve != null)
+        {
+            float zombies = zombieCurve.Evaluate(currentRound);
+            zombiesToSpawnThisRound = Mathf.RoundToInt(zombies);
+        }
+
         zombiesKilledThisRound = 0;
         spawnedZombies = 0;
-        zombiesToSpawnThisRound = totalZombiesToSpawn * currentRound;
         roundHasChanged = false;
 
         runnerZomsToSpawn = GetZombieChance(minRunnerZombies, maxRunnerZombies);
 
         joggerZomsToSpawn = GetZombieChance(minJoggerZombies, maxJoggerZombies);
-    }
 
+        Debug.Log(zombiesToSpawnThisRound);
+    }
 
     private void Update()
     {
@@ -180,8 +193,6 @@ public class ZombieSpawner : MonoBehaviour
         GameObject instantiated = Instantiate(zomList[ran].prefab, spawnCollider.transform.position, Quaternion.identity);
         instantiated.GetComponent<ZombieAI>().zombieStats = zomList[ran];
         spawnedZombies++;
-        print(spawnedZombies);
-        print(instantiated.GetComponent<ZombieAI>().zombieStats.zombieType);
     }
 
     private int GetZombieChance(float min, float max)

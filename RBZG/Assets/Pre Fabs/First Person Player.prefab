@@ -361,13 +361,109 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 04f718a8586c5304c8f56d0ae9d051d8, type: 2}
   spawnRadius: 50
   minSpawnCount: 1
-  maxSpawnCount: 3
+  maxSpawnCount: 30
   minSpawnTime: 1
   maxSpawnTime: 5
   totalZombiesToSpawn: 6
   roundDelay: 10
   waveChanges: []
   waveGenerator: {fileID: 11400000, guid: 137470fef2e069e4e85b4247bac77dc7, type: 2}
+  zombieCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4
+      outSlope: 4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 4
+      inSlope: 5.1104
+      outSlope: 5.1104
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 9
+      inSlope: 5.01176
+      outSlope: 5.01176
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3
+      value: 14
+      inSlope: 5.135707
+      outSlope: 5.135707
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 7
+      value: 40.1627
+      inSlope: 3.7707832
+      outSlope: 3.7707832
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 11.970924
+      value: 63.15715
+      inSlope: 1.2302091
+      outSlope: 1.2302091
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.14690825
+    - serializedVersion: 3
+      time: 24.608686
+      value: 84.437325
+      inSlope: 0.7628428
+      outSlope: 0.7628428
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.6025544
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 45.370438
+      value: 106.37599
+      inSlope: 1.0241481
+      outSlope: 1.0241481
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5386218
+      outWeight: 0.915132
+    - serializedVersion: 3
+      time: 73.466125
+      value: 116.52464
+      inSlope: 0.22975586
+      outSlope: 0.22975586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.9974389
+      outWeight: 0.6677902
+    - serializedVersion: 3
+      time: 100
+      value: 120
+      inSlope: 0.118276276
+      outSlope: 0.118276276
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   zombiesKilledThisRound: 0
 --- !u!114 &8799651692814031625
 MonoBehaviour:

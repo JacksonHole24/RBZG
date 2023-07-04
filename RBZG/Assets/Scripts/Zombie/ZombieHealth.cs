@@ -36,9 +36,9 @@ public class ZombieHealth : MonoBehaviour
     public void KillEnemy()
     {
         isDead = true;
-        animator.SetTrigger("death");
         ZombieAI zom = GetComponent<ZombieAI>();
         zom.dead = true;
         zom.player.GetComponent<ZombieSpawner>().zombiesKilledThisRound++;
+        Destroy(gameObject);
     }
 }
