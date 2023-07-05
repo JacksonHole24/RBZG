@@ -1,0 +1,6 @@
+Move this folder into an "Editor" folder so the scripts will not be within builds.
+
+This package isn't only for making Curves but you can import a curve into the Curve Data
+and then re-open the window to access a curve you have imported.
+
+Can access the editor window in "Window > Curve Editor"
