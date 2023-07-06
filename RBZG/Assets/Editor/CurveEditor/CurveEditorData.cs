@@ -9,6 +9,6 @@ namespace CurveEditor
     [CreateAssetMenu(fileName = "Curve Data", menuName = "Curve Data")]
     public class CurveEditorData : ScriptableObject
     {
-        [SerializeField] public Curve[] curves;
+        public Curve[] curves;
     }
 }

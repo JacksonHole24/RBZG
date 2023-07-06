@@ -10,7 +10,6 @@ using UnityEngine.UIElements;
 
 namespace CurveEditor
 {
-    [Serializable]
     public class CurveEditor : EditorWindow
     {
         public CurveEditorData curveData;
@@ -73,7 +72,7 @@ namespace CurveEditor
                 }
                 else
                 {
-                    curve.startY = EditorGUILayout.FloatField("Start Y", curve.startY, GUILayout.Width(455));
+                    curve.startX = EditorGUILayout.FloatField("Start Y", curve.startX, GUILayout.Width(455));
                     curve.endY = EditorGUILayout.FloatField("End Y", curve.endY, GUILayout.Width(455));
                 }
                 if (curve.editingGraph)
@@ -106,13 +105,13 @@ namespace CurveEditor
                     switch (curve.curveType)
                     {
                         case Curve.CurveType.linear:
-                            curve.curve1 = AnimationCurve.Linear(curve.startX, curve.startY, curve.endX, curve.endY);
+                            curve.aCurve = AnimationCurve.Linear(curve.startX, curve.startY, curve.endX, curve.endY);
                             break;
                         case Curve.CurveType.easeInOut:
-                            curve.curve1 = AnimationCurve.EaseInOut(curve.startX, curve.startY, curve.endX, curve.endY);
+                            curve.aCurve = AnimationCurve.EaseInOut(curve.startX, curve.startY, curve.endX, curve.endY);
                             break;
                         case Curve.CurveType.constant:
-                            curve.curve1 = AnimationCurve.Constant(curve.startX, curve.startY, curve.y);
+                            curve.aCurve = AnimationCurve.Constant(curve.startX, curve.startY, curve.y);
                             break;
                     }
 
@@ -147,7 +146,7 @@ namespace CurveEditor
                     {
                         _curve.curveColor = Color.red;
                     }
-                    _curve.curve1 = EditorGUILayout.CurveField(_curve.curve1, _curve.curveColor, new Rect(_curve.minX, _curve.minY, _curve.maxX, _curve.maxY), GUILayout.Width(position.width - 20), GUILayout.Height(50));
+                    _curve.aCurve = EditorGUILayout.CurveField(_curve.aCurve, _curve.curveColor, new Rect(_curve.minX, _curve.minY, _curve.maxX, _curve.maxY), GUILayout.Width(position.width - 20), GUILayout.Height(50));
                     _curve.curveName = EditorGUILayout.TextField("Curve Name", _curve.curveName, GUILayout.Width(455));
 
                     GUILayout.Space(2.5f);
@@ -184,12 +183,12 @@ namespace CurveEditor
                     if (GUILayout.Button("Smooth Curve", GUILayout.Width(150), GUILayout.Height(20)))
                     {
                         Curve curve = new Curve();
-                        curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                        curve.aCurve = new AnimationCurve(_curve.aCurve.keys);
                         curve.canBeDeleted = true;
 
                         float smoothAmount = 1f; // Scale the smooth amount to a 0-1 range
 
-                        Keyframe[] keyframes = curve.curve1.keys;
+                        Keyframe[] keyframes = curve.aCurve.keys;
                         Keyframe[] adjustedKeyframes = new Keyframe[keyframes.Length];
 
                         // Copy keyframes to adjustedKeyframes
@@ -217,7 +216,7 @@ namespace CurveEditor
                             adjustedKeyframes[i].outWeight = smoothAmount;
                         }
 
-                        curve.curve1.keys = adjustedKeyframes;
+                        curve.aCurve.keys = adjustedKeyframes;
 
                         int index = curves.IndexOf(_curve);
                         curves.Insert(index + 1, curve);
@@ -226,9 +225,9 @@ namespace CurveEditor
                     if (GUILayout.Button("Reverse X Axis", GUILayout.Width(150), GUILayout.Height(20)))
                     {
                         Curve curve = new Curve();
-                        curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                        curve.aCurve = new AnimationCurve(_curve.aCurve.keys);
                         curve.canBeDeleted = true;
-                        Keyframe[] originalKeyframes = curve.curve1.keys;
+                        Keyframe[] originalKeyframes = curve.aCurve.keys;
                         int length = originalKeyframes.Length;
                         Keyframe[] reversedKeyframes = new Keyframe[length];
 
@@ -246,7 +245,7 @@ namespace CurveEditor
                             reversedKeyframes[length - 1 - i] = reversedKeyframe;
                         }
 
-                        curve.curve1.keys = reversedKeyframes;
+                        curve.aCurve.keys = reversedKeyframes;
 
                         int index = curves.IndexOf(_curve);
                         curves.Insert(index + 1, curve);
@@ -255,9 +254,9 @@ namespace CurveEditor
                     if (GUILayout.Button("Reverse Y Axis", GUILayout.Width(150), GUILayout.Height(20)))
                     {
                         Curve curve = new Curve();
-                        curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                        curve.aCurve = new AnimationCurve(_curve.aCurve.keys);
                         curve.canBeDeleted = true;
-                        Keyframe[] originalKeyframes = curve.curve1.keys;
+                        Keyframe[] originalKeyframes = curve.aCurve.keys;
                         int length = originalKeyframes.Length;
                         Keyframe[] reversedKeyframes = new Keyframe[length];
 
@@ -276,7 +275,7 @@ namespace CurveEditor
                             reversedKeyframes[length - 1 - i] = reversedKeyframe;
                         }
 
-                        curve.curve1.keys = reversedKeyframes;
+                        curve.aCurve.keys = reversedKeyframes;
 
                         int index = curves.IndexOf(_curve);
                         curves.Insert(index + 1, curve);
@@ -325,7 +324,7 @@ namespace CurveEditor
                     if (GUILayout.Button("Duplicate Curve", GUILayout.Width(150), GUILayout.Height(20)))
                     {
                         Curve curve = new Curve();
-                        curve.curve1 = new AnimationCurve(_curve.curve1.keys);
+                        curve.aCurve = new AnimationCurve(_curve.aCurve.keys);
                         curve.canBeDeleted = true;
 
                         int index = curves.IndexOf(_curve);
